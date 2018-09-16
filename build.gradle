@@ -1,11 +1,13 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
     }
 }
+ext { springBootVersion = '2.0.3.RELEASE' }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -29,3 +31,4 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
