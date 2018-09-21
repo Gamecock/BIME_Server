@@ -30,5 +30,10 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    implementation 'org.junit.jupiter:junit-jupiter-api'
+    implementation 'junit:junit:4.12'
+    implementation 'org.junit.jupiter:junit-jupiter-api'
+    implementation 'org.junit.jupiter:junit-jupiter-api'
+    implementation 'junit:junit:4.12'
 }
 
