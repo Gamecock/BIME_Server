@@ -6,18 +6,19 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
         classpath("com.google.cloud.tools:appengine-gradle-plugin:1.+")    // Latest 1.x.x release
+        classpath 'org.akhikhl.gretty:gretty:+'
     }
 }
 
 ext { springBootVersion = '2.0.3.RELEASE' }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
+apply plugin: 'org.akhikhl.gretty'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'war'                               // standard Web Archive plugin
-apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 
 bootJar {
     baseName = 'bime-rest-service'
@@ -35,7 +36,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
+    providedCompile 'com.google.appengine:appengine:+'
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
     compile 'jstl:jstl:1.2'
@@ -50,6 +51,11 @@ dependencies {
     implementation 'junit:junit:4.12'
 }
 
+gretty {
+    httpPort = 8080
+    contextPath = '/'
+    servletContainer = 'jetty9'  // What App Engine Flexible uses
+}
 // Always run unit tests
 //appengineDeploy.dependsOn test
 //appengineStage.dependsOn test
