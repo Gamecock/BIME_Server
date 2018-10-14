@@ -1,0 +1,3 @@
+ndlers:
+- url: /.*
+  script: this field is required, but ignored
