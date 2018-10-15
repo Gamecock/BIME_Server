@@ -1,0 +1,13 @@
+runtime: java
+env: flex
+
+service: springboot
+
+health_check:
+  enable_health_check: False
+
+runtime_config:  # Optional
+  jdk: openjdk8
+
+manual_scaling:
+  instances: 1
