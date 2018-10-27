@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,6 +40,18 @@ public class ControllerTest {
     public void shouldReturnName() throws Exception {
         this.mockMvc.perform(get("/greeting?name=Mike")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Hello, Mike!")));
+    }
+
+    @Test
+    public void getAuthorizationReturnsText() throws Exception {
+        this.mockMvc.perform(get("/api/authentication/authenticate")).andDo(print())
+                .andExpect(status().isOk()).andExpect(content().string("Login Endpoint Running."));
+    }
+
+    @Test
+    public void postAuthorizationSuccess() throws Exception {
+        this.mockMvc.perform(post("/api/authentication/authenticate")).andDo(print())
+                .andExpect(status().isOk()).andExpect(content().json("{\"token\":\"abcdefg12345\"}"));
     }
 }
 

@@ -8,10 +8,9 @@
 package com.bime.server;
 
 import com.bime.server.hello.Greeting;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.concurrent.atomic.AtomicLong;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class Controller {
@@ -24,4 +23,19 @@ public class Controller {
         return new Greeting(counter.incrementAndGet(),
                 String.format(template, name));
     }
+
+    @GetMapping("/api/authentication/authenticate")
+    public String getLogin() {
+        return "Login Endpoint Running.";
+    }
+
+    @PostMapping("api/authentication/authenticate")
+    public Credentials postLogin() {
+        return new Credentials();
+    }
+
+    public Controller() {
+    }
+
+
 }
