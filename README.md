@@ -28,7 +28,7 @@ There will be an error because the root is not mapped to anything.
 
 edit url to ...devshell.apspot.com/greeting
 
-### Deploy App
+### Deploy App 
 Used:
 https://cloud.google.com/community/tutorials/kotlin-springboot-compute-engine  
 ./gradlew build  
@@ -50,3 +50,8 @@ gcloud compute firewall-rules create default-allow-http-8080 \
      --target-tags http-server \
      --description "Allow port 8080 access to http-server"  
 
+### Appengine  Deployment
+install gloud sdk, including app-engine-java
+
+./gradlew build
+./gradlew appengineDeploy
