@@ -34,3 +34,6 @@ hs_err_pid*
 #Gradle files
 build/
 local.properties
+src/.gradle/
+.gradle/
+
