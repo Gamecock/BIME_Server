@@ -42,8 +42,8 @@ public class Controller {
         String BannerId = null;
         String Password = null;
         try {
-            BannerId = creds.getString("BannerId");
-            Password = creds.getString("Password");
+            BannerId = creds.getString("bannerID");
+            Password = creds.getString("password");
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
