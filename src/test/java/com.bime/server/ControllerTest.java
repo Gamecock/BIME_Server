@@ -17,11 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.JsonPathResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -56,7 +55,9 @@ public class ControllerTest {
         this.mockMvc.perform(post("/api/authentication/authenticate")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(goodCredentials)).andDo(print())
-                .andExpect(status().isOk()).andExpect(content().json("{\"token\":\"abcdefg12345\"}"));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").value("abcdefg12345"))
+                .andExpect(jsonPath("$.bannerID").value("jonesj13"));
     }
 
     String badCredentials = "{ \"bannerId\":\"smithj15\", \"password\":\"password\"}";
