@@ -51,7 +51,7 @@ public class Controller {
         if( Password == null || Password.equals("password")) {
             throw new UnauthorizedException("Fake Unauthorized");
         }
-        return new Credentials();
+        return new Credentials(BannerId);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
