@@ -49,7 +49,7 @@ public class ControllerTest {
                 .andExpect(status().isOk()).andExpect(content().string("Login Endpoint Running."));
     }
 
-    String goodCredentials = "{ \"BannerId\":\"jonesj13\", \"Password\":\"GoPirates!\"}";
+    String goodCredentials = "{ \"bannerID\":\"jonesj13\", \"password\":\"GoPirates!\"}";
 
     @Test
     public void postAuthorizationSuccess() throws Exception {
@@ -59,7 +59,7 @@ public class ControllerTest {
                 .andExpect(status().isOk()).andExpect(content().json("{\"token\":\"abcdefg12345\"}"));
     }
 
-    String badCredentials = "{ \"BannerId\":\"smithj15\", \"Password\":\"password\"}";
+    String badCredentials = "{ \"bannerId\":\"smithj15\", \"password\":\"password\"}";
 
     @Test
     public void postAuthorizationUnauthorized() throws Exception {

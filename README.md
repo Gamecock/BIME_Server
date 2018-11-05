@@ -55,3 +55,18 @@ install gloud sdk, including app-engine-java
 
 ./gradlew build
 ./gradlew appengineDeploy
+
+## Mobile App Configuration
+
+To use go to MainActivity.java of BIME_ANDROID application.    
+Ensure this line is uncommented.
+    public static String service = "https://";  //Azure & GCP are secure
+Ensure this line is commented out, it is normally active.  
+    public static String server = "bimewebapi.azurewebsites.net";
+
+Ensure this line is uncommented if using GCP. 
+    //    public static String server = "bime-0419.appspot.com";
+
+To test locally at uncomment these lines and comment the rest.  
+    //  public static String service = "http://";
+    //    public static String server = "10.0.2.2:8080";  //this is localhost on laptop when using emulator
