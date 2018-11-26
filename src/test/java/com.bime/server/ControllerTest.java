@@ -17,10 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.JsonPathResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -70,34 +70,49 @@ public class ControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
+    String banner1 = "{ \"bannerID\":\"B0111234\"}";
+
     @Test
     public void getLunchRemainingCount()throws Exception {
-        this.mockMvc.perform(get("/api/B0111234/meals/plan")).andDo(print())
+        this.mockMvc.perform(post("/api/meal/getmealcount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(banner1)).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.MealCount").value(1));
+                .andExpect(jsonPath("$.mealCount").value(1));
     }
+
+    String banner2 = "{ \"bannerID\":\"B0011234\"}";
 
     @Test
     public void getLunchRemainingCountDifferentNumber()throws Exception {
-        this.mockMvc.perform(get("/api/B0011234/meals/plan")).andDo(print())
+        this.mockMvc.perform(post("/api/meal/getmealcount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(banner2)).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.MealCount").value(0));
+                .andExpect(jsonPath("$.mealCount").value(0));
     }
 
     @Test
     public void getLunchTicket()throws Exception {
-        this.mockMvc.perform(get("/api/B0011234/meals/ticket")).andDo(print())
+        this.mockMvc.perform(post("/api/meal/usemeal")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(banner1)).andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.MealTicket").value("This is a ticket for a meal"));
+                .andExpect(jsonPath("$.mealCount").exists())
+                .andExpect(jsonPath("$.bannerID").value("B0111234"));
     }
+
+    String banner3 = "{ \"bannerID\":\"B999999\"}";
 
     @Test
     public void getLunchTicketWithNoTicket()throws Exception {
-        this.mockMvc.perform(get("/api/B999999/meals/ticket")).andDo(print())
+        this.mockMvc.perform(post("/api/meal/usemeal")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(banner3)).andDo(print())
                 .andExpect(status().isNoContent());
     }
 
 
 
-}
+ }
 
