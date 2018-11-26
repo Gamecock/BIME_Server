@@ -54,12 +54,36 @@ public class Controller {
         return new Credentials(BannerId);
     }
 
+    @RequestMapping("/api/{bannerId}/meals/plan")
+    public MealCount getCount(@PathVariable String bannerId) {
+        System.out.println("banner Id is: "+bannerId);
+        return new MealCount(Integer.parseInt(bannerId.substring(2,3)));
+    }
+
+    @RequestMapping("/api/{bannerId}/meals/ticket")
+    public MealTicket getTicket(@PathVariable String bannerId) {
+        System.out.println("banner Id is: "+bannerId);
+        if (bannerId.equals("B999999")) {
+            throw  new NoContentException("No Meals Available");
+        } else {
+            return new MealTicket();
+        }
+    }
+
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public class UnauthorizedException extends RuntimeException {
         public UnauthorizedException(String exception) {
             super(exception);
         }
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public class NoContentException extends RuntimeException {
+        public NoContentException(String exception) {
+            super(exception);
+        }
+    }
+
 
 
 }
