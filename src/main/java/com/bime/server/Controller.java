@@ -8,12 +8,12 @@
 package com.bime.server;
 
 import com.bime.server.hello.Greeting;
-
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -55,14 +55,18 @@ public class Controller {
     }
 
     @PostMapping("/api/meal/getmealcount")
-    public MealCount getCount(@RequestBody String content, @RequestHeader(value="Authorization: Bearer", defaultValue = "") String token) {
+    public MealCount getCount(@RequestBody String content, @RequestHeader(value="Authorization", defaultValue = "") String token, @RequestHeader() Map<String, String> headers) {
+        for(Map.Entry<String, String> header : headers.entrySet()){
+            System.out.println("Received Header: "+ header.getKey()+ " with value: "+header.getValue());
+        }
+
         System.out.println("token is: "+ token);
         //Not correct way to handle auth, just testing mobile app sends token given at login.
-        if(!token.equals("abcdefg12345")) throw new UnauthorizedException("Incorrect Token");
+        if(!token.equals("Bearer: abcdefg12345")) throw new UnauthorizedException("Incorrect Token");
         JSONObject id = new JSONObject(content);
         String bannerID = null;
         try {
-            bannerID = id.getString("bannerID");
+            bannerID = id.getString("BannerID");
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -76,7 +80,7 @@ public class Controller {
         JSONObject id = new JSONObject(content);
         String bannerID = null;
         try {
-            bannerID = id.getString("bannerID");
+            bannerID = id.getString("BannerID");
         } catch (Exception e){
             System.out.println(e.getMessage());
         }

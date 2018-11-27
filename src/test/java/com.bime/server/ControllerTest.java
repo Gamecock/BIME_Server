@@ -37,7 +37,7 @@ public class ControllerTest {
     @Before
     public void setupHeader(){
         goodHeader = new HttpHeaders();
-        goodHeader.add("Authorization: Bearer", "abcdefg12345");
+        goodHeader.add("Authorization", "Bearer: abcdefg12345");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    String banner1 = "{ \"bannerID\":\"B0111234\"}";
+    String banner1 = "{ \"BannerID\":\"B0111234\"}";
 
     @Test
     public void getLunchRemainingCount()throws Exception {
@@ -92,7 +92,7 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.mealCount").value(1));
     }
 
-    String banner2 = "{ \"bannerID\":\"B0011234\"}";
+    String banner2 = "{ \"BannerID\":\"B0011234\"}";
 
     @Test
     public void getLunchRemainingCountDifferentNumber()throws Exception {
@@ -122,7 +122,7 @@ public class ControllerTest {
                 .andExpect(jsonPath("$.bannerID").value("B0111234"));
     }
 
-    String banner3 = "{ \"bannerID\":\"B999999\"}";
+    String banner3 = "{ \"BannerID\":\"B999999\"}";
 
     @Test
     public void getLunchTicketWithNoTicket()throws Exception {
