@@ -55,8 +55,10 @@ public class Controller {
     }
 
     @PostMapping("/api/meal/getmealcount")
-    public MealCount getCount(@RequestBody String content) {
-        System.out.println("banner Id is: "+ content);
+    public MealCount getCount(@RequestBody String content, @RequestHeader(value="Authorization: Bearer", defaultValue = "") String token) {
+        System.out.println("token is: "+ token);
+        //Not correct way to handle auth, just testing mobile app sends token given at login.
+        if(!token.equals("abcdefg12345")) throw new UnauthorizedException("Incorrect Token");
         JSONObject id = new JSONObject(content);
         String bannerID = null;
         try {

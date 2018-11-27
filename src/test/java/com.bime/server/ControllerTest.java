@@ -7,11 +7,13 @@
  *********************/
 package com.bime.server;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,8 +29,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ControllerTest {
 
+    private HttpHeaders goodHeader;
+
     @Autowired
     private MockMvc mockMvc;
+
+    @Before
+    public void setupHeader(){
+        goodHeader = new HttpHeaders();
+        goodHeader.add("Authorization: Bearer", "abcdefg12345");
+    }
 
     @Test
     public void shouldReturnDefault() throws Exception {
@@ -75,6 +85,7 @@ public class ControllerTest {
     @Test
     public void getLunchRemainingCount()throws Exception {
         this.mockMvc.perform(post("/api/meal/getmealcount")
+                .headers(goodHeader)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(banner1)).andDo(print())
                 .andExpect(status().isOk())
@@ -86,10 +97,19 @@ public class ControllerTest {
     @Test
     public void getLunchRemainingCountDifferentNumber()throws Exception {
         this.mockMvc.perform(post("/api/meal/getmealcount")
+                .headers(goodHeader)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(banner2)).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.mealCount").value(0));
+    }
+
+    @Test
+    public void getLunchRemainingWithoutcredentials()throws Exception {
+        this.mockMvc.perform(post("/api/meal/getmealcount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(banner2)).andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
