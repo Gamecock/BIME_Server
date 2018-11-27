@@ -54,19 +54,34 @@ public class Controller {
         return new Credentials(BannerId);
     }
 
-    @RequestMapping("/api/{bannerId}/meals/plan")
-    public MealCount getCount(@PathVariable String bannerId) {
-        System.out.println("banner Id is: "+bannerId);
-        return new MealCount(Integer.parseInt(bannerId.substring(2,3)));
+    @PostMapping("/api/meal/getmealcount")
+    public MealCount getCount(@RequestBody String content) {
+        System.out.println("banner Id is: "+ content);
+        JSONObject id = new JSONObject(content);
+        String bannerID = null;
+        try {
+            bannerID = id.getString("bannerID");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return new MealCount(Integer.parseInt(bannerID.substring(2,3)), bannerID);
     }
 
-    @RequestMapping("/api/{bannerId}/meals/ticket")
-    public MealTicket getTicket(@PathVariable String bannerId) {
-        System.out.println("banner Id is: "+bannerId);
-        if (bannerId.equals("B999999")) {
+    @PostMapping("/api/meal/usemeal")
+    public MealCount getTicket(@RequestBody String content) {
+        System.out.println("banner Id is: "+content);
+        JSONObject id = new JSONObject(content);
+        String bannerID = null;
+        try {
+            bannerID = id.getString("bannerID");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        if (bannerID.equals("B999999")) {
             throw  new NoContentException("No Meals Available");
         } else {
-            return new MealTicket();
+            return new MealCount(Integer.parseInt(bannerID.substring(2,3)), bannerID);
         }
     }
 

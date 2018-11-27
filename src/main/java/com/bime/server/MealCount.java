@@ -1,22 +1,25 @@
 package com.bime.server;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class MealCount {
 
-    private final int MealCount;
+    private final int mealCount;
+    private final String bannerID;
 
     public MealCount( ) {
-        this.MealCount = 1;
+
+        this.mealCount = 1;
+        this.bannerID = "B00775050";
     }
 
-    public MealCount(int amount) {
-        this.MealCount = amount;
+    public MealCount(int amount, String bannerId) {
+        this.mealCount = amount;
+        this.bannerID = bannerId;
     }
 
-    @JsonProperty("MealCount")
     public int getMealCount() {
-        return MealCount;
+        return mealCount;
     }
+
+    public String getBannerID() { return bannerID; }
 
 }
