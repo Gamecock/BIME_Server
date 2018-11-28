@@ -37,7 +37,7 @@ public class ControllerTest {
     @Before
     public void setupHeader(){
         goodHeader = new HttpHeaders();
-        goodHeader.add("Authorization", "Bearer: abcdefg12345");
+        goodHeader.add("Authorization", "Bearer abcdefg12345");
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void getLunchRemainingWithoutcredentials()throws Exception {
+    public void getLunchRemainingWithoutcredentialsFails()throws Exception {
         this.mockMvc.perform(post("/api/meal/getmealcount")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(banner2)).andDo(print())
@@ -125,7 +125,7 @@ public class ControllerTest {
     String banner3 = "{ \"BannerID\":\"B999999\"}";
 
     @Test
-    public void getLunchTicketWithNoTicket()throws Exception {
+    public void getLunchTicketWithNoTicketFails()throws Exception {
         this.mockMvc.perform(post("/api/meal/usemeal")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(banner3)).andDo(print())

@@ -62,7 +62,7 @@ public class Controller {
 
         System.out.println("token is: "+ token);
         //Not correct way to handle auth, just testing mobile app sends token given at login.
-        if(!token.equals("Bearer: abcdefg12345")) throw new UnauthorizedException("Incorrect Token");
+        if(!token.equals("Bearer abcdefg12345")) throw new UnauthorizedException("Incorrect Token");
         JSONObject id = new JSONObject(content);
         String bannerID = null;
         try {
